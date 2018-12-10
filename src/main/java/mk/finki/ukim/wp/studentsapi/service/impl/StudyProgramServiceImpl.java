@@ -4,48 +4,33 @@ import mk.finki.ukim.wp.studentsapi.model.StudyProgram;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudyProgramDuplicateException;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudyProgramNotFoundException;
 import mk.finki.ukim.wp.studentsapi.persistence.StudyProgramRepository;
+import mk.finki.ukim.wp.studentsapi.repository.StudyProgramRepositoryInterface;
 import mk.finki.ukim.wp.studentsapi.service.StudyProgramService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class StudyProgramServiceImpl implements StudyProgramService {
-    final StudyProgramRepository repo;
-    public StudyProgramServiceImpl(StudyProgramRepository repo){
+    final StudyProgramRepositoryInterface repo;
+    public StudyProgramServiceImpl(StudyProgramRepositoryInterface repo){
         this.repo=repo;
     }
     @Override
     public List<StudyProgram> listAllStudyPrograms() {
-        return repo.listAllStudyPrograms();
+        return repo.findAll();
+    }
+
+
+
+
+    @Override
+    public void addNew(String studyProgram) throws StudyProgramDuplicateException {
+         repo.save(new StudyProgram(studyProgram));
     }
 
     @Override
-    public StudyProgram getStudyProgramByIndex(long index) throws StudyProgramNotFoundException {
-        return repo.getStudyProgramByIndex(index);
+    public void delete(long index) throws StudyProgramNotFoundException {
+         repo.deleteById(index);
     }
 
-    @Override
-    public StudyProgram getStudyProgramByName(String name) throws StudyProgramNotFoundException {
-        return repo.getStudyProgramByName(name);
-    }
-
-    @Override
-    public StudyProgram addNew(StudyProgram studyProgram) throws StudyProgramDuplicateException {
-        return repo.addNew(studyProgram);
-    }
-
-    @Override
-    public StudyProgram delete(long index) throws StudyProgramNotFoundException {
-        return repo.delete(index);
-    }
-
-    @Override
-    public StudyProgram deleteByName(String name) throws StudyProgramNotFoundException {
-        return repo.deleteByName(name);
-    }
-
-    @Override
-    public StudyProgram update(String oldName, String newName) throws StudyProgramNotFoundException {
-        return repo.update(oldName,newName);
-    }
 }

@@ -21,6 +21,7 @@ import javax.validation.constraints.Null;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,112 +54,38 @@ public class StudentResource {
     @GetMapping("/by_study_program/{id}")
     public List<Student> studentsWithStudyProgramId(@PathVariable("id")Long id){
         //PROBLEM SO NULL??
-        return studentService.listAllStudents()
-                .stream()
-                .filter(i->i.studyProgram.id==id)
-                .collect(Collectors.toList());
+        return studentService.getAllStudentsFromStudyProgram(id);
     }
     //DALI E OK Set code ???
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void addNew(HttpServletRequest request, HttpServletResponse response)
+    public void addNew(@RequestBody Map<String,String> payload,HttpServletResponse response)
             throws StudentDuplicateException, IOException {
-        String index = request.getParameter("index");
-        String name=request.getParameter("name");
-        String lastName=request.getParameter("lastName");
-        String studyProgram=request.getParameter("studyProgramName");
+        String index = payload.get("index");
+        String name=payload.get("name");
+        String lastName=payload.get("lastName");
+        String studyProgram=payload.get("studyProgramName");
 
-
-        if(name == null || lastName ==null || studyProgram==null ||index==null ){
-            response.setStatus(400);
-        }
-        else if(index.length()!=6){
-            response.setStatus(400);
-        }
-        else {
-            Boolean notDigits = index.chars().map(c -> (char) c).allMatch(i -> Character.isDigit(i));
-            if (notDigits) {
-            response.setStatus(400);
-            }
-            else if(!studyProgramWithNameExists(studyProgram)){
-                response.setStatus(400);
-            }
-            else {
-                StudyProgram program=studyProgramService.getStudyProgramByName(studyProgram);
-                Student s=new Student(name,lastName,program);
-                studentService.addNew(s);
-                response.setStatus(201);
-                response.setHeader("Location","/students/"+index);
-
-            }
-        }
+        studentService.addNew(index,name,lastName,studyProgram);
+        response.setHeader("Location","/students/"+payload.get("index"));
 
     }
     @PatchMapping("/{index}")
     @ResponseStatus(HttpStatus.OK)
-    public Student update(@RequestBody String name,@RequestBody String lastName,
-                       @RequestBody String studyProgramName,@PathVariable String index)
-            throws StudentNotFoundException, IOException {
-            if(!studyProgramWithNameExists(studyProgramName)){
-                //kako da vrat status kod 400
-                // return ???
-            }
-            else {
-                try{
-                    StudyProgram program=studyProgramService.getStudyProgramByName(studyProgramName);
-                    return studentService.update(index,name,lastName,program);
-                }
-                catch(Exception e){
-                    // kod 404 ???
-                }
-            }
+    public void updateStudent(@RequestBody Map<String,String> payload)
+            throws StudentDuplicateException, IOException {
+        String index = payload.get("index");
+        String name=payload.get("name");
+        String lastName=payload.get("lastName");
+        String studyProgram=payload.get("studyProgramName");
 
+        studentService.update(index,name,lastName,studyProgram);
     }
     @DeleteMapping("/{index}")
-    public Student delete(@PathVariable String index){
-        try{
-            return studentService.delete(index);
-        }
-        catch (Exception e){
-            // kako da vrati kod 404
-        }
+    public void delete(@PathVariable String index){
+        studentService.delete(index);
     }
-    @GetMapping("/study_programs")
-    public List<StudyProgram> listAllStudyPrograms(){
-        return studyProgramService.listAllStudyPrograms();
-    }
-
-    @PostMapping("/study_programs")
-    @ResponseStatus(HttpStatus.CREATED)
-    public StudyProgram addNewStudyProgram(HttpServletRequest request, HttpServletResponse response){
-        try{
-            StudyProgram s=new StudyProgram(request.getParameter("studyProgramName"));
-            response.setStatus(201);
-            return studyProgramService.addNew(s);
-        }
-        catch(Exception e){
-            //error studyProgramAlreadyExists return HTTP code
-        }
-    }
-
-    @DeleteMapping("/study_programs/{id}")
-    public StudyProgram deleteStudyProgram(@PathVariable("id") long id){
-        try{
-            return studyProgramService.delete(id);
-        }
-        catch(Exception e){
-            //http status code ??
-        }
-    }
-    public Boolean studyProgramWithNameExists(String name){
-        return studyProgramService
-                .listAllStudyPrograms()
-                .stream()
-                .map(i->i.name)
-                .filter(i->i.equals(name))
-                .count()!=0;
-    }
-
+//
 }
 class StudentNoProgram{
     public String index;

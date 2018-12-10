@@ -13,9 +13,11 @@ public interface StudentService {
 
     Student getStudentByIndex(String index) throws StudentNotFoundException;
 
-    Student addNew(Student student) throws StudentDuplicateException;
+    Student addNew(String index,String name,String lastName,String programName) throws StudentDuplicateException;
 
     Student delete(String index) throws StudentNotFoundException;
 
-    Student update(String index,String name,String lastName,StudyProgram studyProgram) throws StudentNotFoundException;
+    List<Student> getAllStudentsFromStudyProgram(Long id);
+
+    Student update(String index,String name,String lastName,String studyProgram) throws StudentNotFoundException;
 }

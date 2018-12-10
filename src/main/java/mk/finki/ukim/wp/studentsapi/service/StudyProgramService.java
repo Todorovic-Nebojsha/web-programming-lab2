@@ -7,17 +7,13 @@ import mk.finki.ukim.wp.studentsapi.model.exceptions.StudyProgramNotFoundExcepti
 import java.util.List;
 
 public interface StudyProgramService {
+
     List<StudyProgram> listAllStudyPrograms();
 
-    StudyProgram getStudyProgramByIndex(long index) throws StudyProgramNotFoundException;
 
-    StudyProgram getStudyProgramByName(String name) throws StudyProgramNotFoundException;
+    void addNew(String studyProgram) throws StudyProgramDuplicateException;
 
-    StudyProgram addNew(StudyProgram studyProgram) throws StudyProgramDuplicateException;
+    void delete(long index) throws StudyProgramNotFoundException;
 
-    StudyProgram delete(long index) throws StudyProgramNotFoundException;
 
-    StudyProgram deleteByName(String name) throws StudyProgramNotFoundException;
-
-    StudyProgram update(String oldName,String newName) throws StudyProgramNotFoundException ;
 }

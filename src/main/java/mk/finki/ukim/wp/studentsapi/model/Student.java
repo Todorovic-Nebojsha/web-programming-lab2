@@ -3,10 +3,13 @@ package mk.finki.ukim.wp.studentsapi.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name="Students")
 public class Student {
 
+    @Id
     public String index;
     public String name,lastName;
+    @ManyToOne
     public StudyProgram studyProgram;
 
     public Student() {
@@ -28,13 +31,13 @@ public class Student {
         this.name = name;
         this.lastName = lastName;
     }
-    @Id
+
     public String getIndex(){
         return this.index;
     }
-    /*public void setIndex(String index) {
+    public void setIndex(String index) {
         this.index = index;
-    }*/
+    }
 
     public String getName() {
         return name;
@@ -52,8 +55,7 @@ public class Student {
         this.lastName = lastName;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "study_program_id")
+
     public StudyProgram getStudyProgram() {
         return studyProgram;
     }
