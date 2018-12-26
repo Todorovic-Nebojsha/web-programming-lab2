@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin({"*", "localhost:3000"})
 @RestController
 @RequestMapping(value="/study_programs",produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudyProgramResource {
@@ -35,7 +36,7 @@ public class StudyProgramResource {
 
          }
 
-    @DeleteMapping("/study_programs/{id}")
+    @DeleteMapping("/{id}")
     public void deleteStudyProgram(@PathVariable("id") long id){
         service.delete(id);
     }

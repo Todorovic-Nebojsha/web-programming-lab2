@@ -1,7 +1,8 @@
 package mk.finki.ukim.wp.studentsapi;
 
-import mk.finki.ukim.wp.studentsapi.persistence.StudentRepository;
-import mk.finki.ukim.wp.studentsapi.persistence.StudyProgramRepository;
+
+import mk.finki.ukim.wp.studentsapi.repository.StudentRepositoryInterface;
+import mk.finki.ukim.wp.studentsapi.repository.StudyProgramRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Component;
 public class StudentsApiApplication {
 
 	@Autowired
-	private StudentRepository studentRepository;
+	private StudentRepositoryInterface studentRepository;
 	@Autowired
-	private StudyProgramRepository studyProgramRepository;
+	private StudyProgramRepositoryInterface studyProgramRepository;
 
 	public static void main(String[] args) {
 

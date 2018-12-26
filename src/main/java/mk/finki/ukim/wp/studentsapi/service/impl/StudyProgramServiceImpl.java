@@ -3,7 +3,6 @@ package mk.finki.ukim.wp.studentsapi.service.impl;
 import mk.finki.ukim.wp.studentsapi.model.StudyProgram;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudyProgramDuplicateException;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudyProgramNotFoundException;
-import mk.finki.ukim.wp.studentsapi.persistence.StudyProgramRepository;
 import mk.finki.ukim.wp.studentsapi.repository.StudyProgramRepositoryInterface;
 import mk.finki.ukim.wp.studentsapi.service.StudyProgramService;
 import org.springframework.stereotype.Service;

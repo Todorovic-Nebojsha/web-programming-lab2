@@ -5,7 +5,6 @@ import mk.finki.ukim.wp.studentsapi.model.StudyProgram;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.BadParametarsException;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudentDuplicateException;
 import mk.finki.ukim.wp.studentsapi.model.exceptions.StudentNotFoundException;
-import mk.finki.ukim.wp.studentsapi.persistence.StudentRepository;
 import mk.finki.ukim.wp.studentsapi.repository.StudentRepositoryInterface;
 import mk.finki.ukim.wp.studentsapi.repository.StudyProgramRepositoryInterface;
 import mk.finki.ukim.wp.studentsapi.service.StudentService;

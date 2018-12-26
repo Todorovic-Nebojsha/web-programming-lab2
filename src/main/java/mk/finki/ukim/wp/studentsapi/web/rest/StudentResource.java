@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@CrossOrigin({"*", "localhost:3000"})
 @RestController
 @RequestMapping(value="/students",produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentResource {
@@ -56,7 +57,7 @@ public class StudentResource {
         //PROBLEM SO NULL??
         return studentService.getAllStudentsFromStudyProgram(id);
     }
-    //DALI E OK Set code ???
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addNew(@RequestBody Map<String,String> payload,HttpServletResponse response)
@@ -85,7 +86,7 @@ public class StudentResource {
     public void delete(@PathVariable String index){
         studentService.delete(index);
     }
-//
+
 }
 class StudentNoProgram{
     public String index;
